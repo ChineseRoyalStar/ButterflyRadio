@@ -1,0 +1,33 @@
+//
+//  Constant.pch
+//  ButterflyRadio
+//
+//  Created by qianfeng on 16/9/10.
+//  Copyright © 2016年 com.ios.ijinan. All rights reserved.
+//
+
+#ifndef Constant_pch
+#define Constant_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+
+#define SCREEN_HEIGTH [UIScreen mainScreen].bounds.size.height
+
+#define PURPLE_COLOR [UIColor colorWithRed:153/255.0 green:51/255.0 blue:250/255.0 alpha:1]
+
+#import "UIView+FrameSet.h"
+
+#import <Masonry/Masonry.h>
+
+#import <MJExtension/MJExtension.h>
+
+#import <MJRefresh/MJRefresh.h>
+
+#import <ReactiveCocoa/ReactiveCocoa.h>
+
+#import <SDWebImage/UIImageView+WebCache.h>
+
+#endif /* Constant_pch */
