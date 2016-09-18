@@ -18,7 +18,6 @@
 
 @property(nonatomic,weak) DiscoveryViewController *delegate;
 
-
 - (void)setUnderlineViewFrameWithOriginX:(CGFloat)originX;
 
 - (void)setUnderlineViewFrameWithOriginY:(CGFloat)originY;

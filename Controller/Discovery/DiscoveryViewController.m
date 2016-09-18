@@ -10,7 +10,10 @@
 
 #import "NavigationHeaderView.h"
 
+
 #import "RecommendCollectionViewCell.h"
+
+#import "CategoryCollectionViewCell.h"
 
 
 @interface DiscoveryViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,RecommendCollectionViewCellDelegate>
@@ -62,7 +65,11 @@
         
         _contentCollectionView.pagingEnabled = YES;
         
+        
+        //Regiser nib for CollectionView
         [_contentCollectionView registerNib:[UINib nibWithNibName:@"RecommendCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"RecommendCollectionViewCell"];
+        
+        [_contentCollectionView registerNib:[UINib nibWithNibName:@"CategoryCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"CategoryCollectionViewCell"];
         
         [[_contentCollectionView rac_valuesAndChangesForKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew observer:nil] subscribeNext:^(id x) {
 
@@ -129,13 +136,26 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *reusedIdentifer = @"RecommendCollectionViewCell";
-    
-    RecommendCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reusedIdentifer forIndexPath:indexPath];
-    
-    cell.delegate = self;
+    if(indexPath.row == 0) {
+        
+        NSString *reusedIdentifer = @"RecommendCollectionViewCell";
+        
+        RecommendCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reusedIdentifer forIndexPath:indexPath];
+        
+        cell.delegate = self;
+        
+        return cell;
+        
+    }else{
+     
+        NSString *reusedIdentifer = @"CategoryCollectionViewCell";
+        
+        CategoryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reusedIdentifer forIndexPath:indexPath];
+        
+        return cell;
+        
+    }
 
-    return cell;
 }
 
 #pragma mark - RecommendCollectionViewCellDelegate

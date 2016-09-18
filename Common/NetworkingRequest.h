@@ -30,4 +30,10 @@
 #pragma mark - 现界面底部是广告接口，点击查看更多分类跳转到发现界面的分类中
 - (void)requestForRecommendFinalPartWithCallBack:(void(^)(NSString *link, NSString *cover, NSError *err))callBack;
 
+#pragma mark - 发现分类界面
+- (void)requestForCategoryDataWithCallBack:(void(^)(NSString *adCover, NSArray *models, NSError *err))callBack;
+
+#pragma mark - 发现分类界面底部广告栏
+- (void)requestForAdFooterInCategoryWithCallback:(void(^)(NSArray *adsUrl, NSError *err))callBack;
+
 @end

@@ -10,6 +10,7 @@
 
 #import "NavTitleModel.h"
 
+
 #import "DiscoveryColumnsModel.h"
 
 #import "EditorRecommendAlbumsModel.h"
@@ -17,6 +18,9 @@
 #import "SpecialColumnModel.h"
 
 #import "FocusImageModel.h"
+
+#import "CategoryModel.h"
+
 
 #import <AFNetworking/AFNetworking.h>
 
@@ -45,9 +49,9 @@
     
     NSString *url = @"http://mobile.ximalaya.com/mobile/discovery/v1/tabs?device=android";
     
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    manager.responseSerializer = [[AFHTTPResponseSerializer alloc]init];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -82,9 +86,9 @@
     
     NSDictionary *paras = @{@"channel":@"and-a1",@"device":@"android",@"includeActivity":@"true",@"includeSpecial":@"true",@"scale":@"2",@"version":@"4.3.98"};
     
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    manager.responseSerializer = [[AFHTTPResponseSerializer alloc]init];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [manager POST:baseUrl parameters:paras progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -123,9 +127,9 @@
     
     NSDictionary *paras = @{@"device":@"android"};
     
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    manager.responseSerializer = [[AFHTTPResponseSerializer alloc]init];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [manager POST:baseUrl parameters:paras progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -155,17 +159,15 @@
     
     NSDictionary *paras = @{@"device":@"android",@"name":@"find_banner",@"network":@"wifi",@"operator":@"0",@"version":@"4.3.98"};
     
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    manager.responseSerializer = [[AFHTTPResponseSerializer alloc]init];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [manager GET:baseUrl parameters:paras progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSError *err = nil;
 
         NSDictionary *data = [[[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&err] valueForKey:@"data"] objectAtIndex:0];
-        
-       // NSLog(@"%@",[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding]);
         
         NSString *link = [data valueForKey:@"link"];
         
@@ -179,6 +181,95 @@
         
     }];
     
+}
+
+#pragma mark - 发现分类界面
+- (void)requestForCategoryDataWithCallBack:(void(^)(NSString *adCover, NSArray *models, NSError *err))callBack {
+    
+    /*
+        http://mobile.ximalaya.com/mobile/discovery/v1/categories?channel=and-a1&device=android&picVersion=13&scale=2
+     */
+    
+    NSString *baseUrl = @"http://mobile.ximalaya.com/mobile/discovery/v1/categories";
+    
+    NSDictionary *paras = @{@"channel":@"and-a1",@"device":@"android",@"picVersion":@"13",@"scale":@"2"};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager POST:baseUrl parameters:paras progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSError *err = nil;
+        
+        NSArray *arr = [[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&err] valueForKey:@"list"];
+        
+        NSMutableArray<CategoryModel *> *modelArr = [CategoryModel mj_objectArrayWithKeyValuesArray:arr];
+        
+        NSString *adCover = [modelArr objectAtIndex:0].coverPath;
+    
+        [modelArr removeObjectAtIndex:0];
+        
+        
+        NSMutableArray *modelsWithSection = [[NSMutableArray alloc]init];
+        
+        for(int i=0;i<modelArr.count;i++) {
+            
+            if(i%6==0){
+                
+                NSMutableArray *componentArr = [[NSMutableArray alloc]init];
+                
+                [modelsWithSection addObject:componentArr];
+            }
+            
+            [[modelsWithSection objectAtIndex:(i/6)] addObject:[modelArr objectAtIndex:i]];
+            
+        }
+        
+        callBack(adCover,modelsWithSection,nil);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        callBack(nil,nil,error);
+        
+    }];
+    
+}
+
+#pragma mark - 发现分类界面底部广告栏
+- (void)requestForAdFooterInCategoryWithCallback:(void(^)(NSArray *adsUrl, NSError *err))callBack{
+    
+    /*
+        http://adse.ximalaya.com/ting?device=android&name=cata_index_banner&network=wifi&operator=0&version=4.3.98
+     */
+    
+    NSString *baseUrl = @"http://adse.ximalaya.com/ting";
+    
+    NSDictionary *paras = @{@"device":@"android",@"name":@"cata_index_banner",@"network":@"wifi",@"operator":@"0",@"version":@"4.3.98"};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:baseUrl parameters:paras progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+       
+        NSError *err = nil;
+        
+        NSArray *arr = [[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&err] valueForKey:@"data"];
+        
+        NSMutableArray *adsUrl = [[NSMutableArray alloc]init];
+        
+        for(NSDictionary *dic in arr){
+            
+            [adsUrl addObject:[dic valueForKey:@"cover"]];
+        }
+        
+        callBack(adsUrl,nil);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        callBack(nil,error);
+    }];
 }
 
 @end

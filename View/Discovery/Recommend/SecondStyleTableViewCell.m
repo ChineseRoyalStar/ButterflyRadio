@@ -6,9 +6,9 @@
 //  Copyright © 2016年 com.ios.ijinan. All rights reserved.
 //
 
-#import "SpecialColumnTableViewCell.h"
+#import "SecondStyleTableViewCell.h"
 
-@implementation SpecialColumnTableViewCell
+@implementation SecondStyleTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -18,7 +18,6 @@
 
 @end
 
-
 @interface RecommendCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

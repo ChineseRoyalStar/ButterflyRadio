@@ -12,7 +12,7 @@
 
 #import "FirstStyleTableViewCell.h"
 
-#import "SpecialColumnTableViewCell.h"
+#import "SecondStyleTableViewCell.h"
 
 #import "SpecialColumnModel.h"
 
@@ -74,7 +74,7 @@
     
     [self.tableView registerClass:[FirstStyleTableViewCell class]forCellReuseIdentifier:@"FirstStyleTableViewCell"];
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"SpecialColumnTableViewCell" bundle:nil] forCellReuseIdentifier:@"SpecialColumnTableViewCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SecondStyleTableViewCell" bundle:nil] forCellReuseIdentifier:@"SecondStyleTableViewCell"];
 }
 
 #pragma mark - DataSource
@@ -357,7 +357,6 @@
     
 }
 
-
 #pragma mark - UITableViewDelegate Methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -395,9 +394,9 @@
         
     }else {
         
-        static NSString *reusedStyleTwoIdentifier = @"SpecialColumnTableViewCell";
+        static NSString *reusedStyleTwoIdentifier = @"SecondStyleTableViewCell";
         
-        SpecialColumnTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reusedStyleTwoIdentifier forIndexPath:indexPath];
+        SecondStyleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reusedStyleTwoIdentifier forIndexPath:indexPath];
         
         SpecialColumnModel *model = [((SpecialColumnBoardModel *)[self.dataSource objectAtIndex:indexPath.section]).list objectAtIndex:indexPath.row];
         

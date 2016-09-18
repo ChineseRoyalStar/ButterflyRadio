@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SpecialColumnTableViewCell : UITableViewCell
+@interface SecondStyleTableViewCell : UITableViewCell
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
