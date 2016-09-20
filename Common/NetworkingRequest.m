@@ -12,15 +12,12 @@
 
 
 #import "DiscoveryColumnsModel.h"
-
 #import "EditorRecommendAlbumsModel.h"
-
 #import "SpecialColumnModel.h"
-
 #import "FocusImageModel.h"
-
 #import "CategoryModel.h"
-
+#import "RadioCategoryModel.h"
+#import "TopRadiosModel.h"
 
 #import <AFNetworking/AFNetworking.h>
 
@@ -47,7 +44,7 @@
     //http://mobile.ximalaya.com/mobile/discovery/v1/tabs?device=android
     
     
-    NSString *url = @"http://mobile.ximalaya.com/mobile/discovery/v1/tabs?device=android";
+    static NSString *url = @"http://mobile.ximalaya.com/mobile/discovery/v1/tabs?device=android";
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
@@ -82,7 +79,7 @@
      http://mobile.ximalaya.com/mobile/discovery/v3/recommends?channel=and-a1&device=android&includeActivity=true&includeSpecial=true&scale=2&version=4.3.98
      */
     
-    NSString *baseUrl = @"http://mobile.ximalaya.com/mobile/discovery/v3/recommends";
+    static NSString *baseUrl = @"http://mobile.ximalaya.com/mobile/discovery/v3/recommends";
     
     NSDictionary *paras = @{@"channel":@"and-a1",@"device":@"android",@"includeActivity":@"true",@"includeSpecial":@"true",@"scale":@"2",@"version":@"4.3.98"};
     
@@ -104,7 +101,6 @@
         
         NSArray *discoveryColumnsArr = [DiscoveryColumnsModel mj_objectArrayWithKeyValuesArray:[[dict valueForKey:@"discoveryColumns"] valueForKey:@"list"]];
         
-        
         callBack(headerAdsArr,specials,focus,discoveryColumnsArr,nil);
         
         
@@ -123,7 +119,7 @@
      http://mobile.ximalaya.com/mobile/discovery/v1/recommend/hotAndGuess?device=android
      */
     
-    NSString *baseUrl = @"http://mobile.ximalaya.com/mobile/discovery/v1/recommend/hotAndGuess";
+    static NSString *baseUrl = @"http://mobile.ximalaya.com/mobile/discovery/v1/recommend/hotAndGuess";
     
     NSDictionary *paras = @{@"device":@"android"};
     
@@ -155,7 +151,7 @@
      http://adse.ximalaya.com/ting?device=android&name=find_banner&network=wifi&operator=0&version=4.3.98
      */
     
-    NSString *baseUrl = @"http://adse.ximalaya.com/ting";
+    static NSString *baseUrl = @"http://adse.ximalaya.com/ting";
     
     NSDictionary *paras = @{@"device":@"android",@"name":@"find_banner",@"network":@"wifi",@"operator":@"0",@"version":@"4.3.98"};
     
@@ -190,7 +186,7 @@
         http://mobile.ximalaya.com/mobile/discovery/v1/categories?channel=and-a1&device=android&picVersion=13&scale=2
      */
     
-    NSString *baseUrl = @"http://mobile.ximalaya.com/mobile/discovery/v1/categories";
+    static NSString *baseUrl = @"http://mobile.ximalaya.com/mobile/discovery/v1/categories";
     
     NSDictionary *paras = @{@"channel":@"and-a1",@"device":@"android",@"picVersion":@"13",@"scale":@"2"};
     
@@ -243,7 +239,7 @@
         http://adse.ximalaya.com/ting?device=android&name=cata_index_banner&network=wifi&operator=0&version=4.3.98
      */
     
-    NSString *baseUrl = @"http://adse.ximalaya.com/ting";
+    static NSString *baseUrl = @"http://adse.ximalaya.com/ting";
     
     NSDictionary *paras = @{@"device":@"android",@"name":@"cata_index_banner",@"network":@"wifi",@"operator":@"0",@"version":@"4.3.98"};
     
@@ -271,5 +267,44 @@
         callBack(nil,error);
     }];
 }
+
+#pragma mark - 发现广播界面
+- (void)reuquestForChannelListWithCallback:(void(^)(NSArray *channelList, NSArray *topRadios, NSError *err))callBack {
+    
+    /*
+        http://live.ximalaya.com/live-web/v4/homepage
+    */
+    
+    static NSString *baseUrl = @"http://live.ximalaya.com/live-web/v4/homepage";
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:baseUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSError *err = nil;
+        
+        NSDictionary *dic = [[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&err] valueForKey:@"data"];
+        
+        
+        NSArray *channelsArr = [dic valueForKey:@"categories"];
+        
+        NSArray *channelList = [RadioCategoryModel mj_objectArrayWithKeyValuesArray:channelsArr];
+        
+        NSArray *topRadioArr = [dic valueForKey:@"topRadios"];
+        
+        NSArray *topRadios = [TopRadiosModel mj_objectArrayWithKeyValuesArray:topRadioArr];
+        
+        callBack(channelList,topRadios,nil);
+    
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        callBack(nil,nil,error);
+        
+    }];
+    
+}
+
 
 @end

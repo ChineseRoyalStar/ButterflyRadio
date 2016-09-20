@@ -38,8 +38,6 @@
     [super awakeFromNib];
     
     [self prepareForCategoryList];
-    
-    self.backgroundColor = [UIColor lightGrayColor];
 }
 
 
@@ -64,7 +62,7 @@
         
         _bgScrollView.contentSize = CGSizeMake(SCREEN_WIDTH,SCREEN_HEIGTH);
         
-        _bgScrollView.backgroundColor = [UIColor clearColor];
+        _bgScrollView.backgroundColor = [UIColor groupTableViewBackgroundColor];
         
     }
     

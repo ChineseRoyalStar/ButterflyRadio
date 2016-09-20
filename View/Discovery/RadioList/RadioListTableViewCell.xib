@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="94" id="KGk-i7-Jjw" customClass="RadioListTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="94"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="93"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xeY-qi-ZHe">
+                        <rect key="frame" x="10" y="10" width="73" height="73"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="xeY-qi-ZHe" secondAttribute="height" id="Ucl-l6-vzN"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="电台名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5w-Bh-Co2">
+                        <rect key="frame" x="91" y="10" width="221" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="正在直播" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rNy-qb-oKl">
+                        <rect key="frame" x="91" y="38" width="221" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_item_playtimes_count.png" translatesAutoresizingMaskIntoConstraints="NO" id="YfK-i3-mef">
+                        <rect key="frame" x="91" y="68" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="Ddr-0h-b0r"/>
+                            <constraint firstAttribute="width" constant="15" id="mci-zR-TpN"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tTX-b5-R0N">
+                        <rect key="frame" x="108" y="67" width="204" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="album_play.png" translatesAutoresizingMaskIntoConstraints="NO" id="QFM-x8-08f">
+                        <rect key="frame" x="280" y="32" width="30" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="29" id="LP7-nu-RwU"/>
+                            <constraint firstAttribute="width" constant="30" id="oRD-05-DP0"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="xeY-qi-ZHe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="4PZ-WM-khr"/>
+                    <constraint firstItem="YfK-i3-mef" firstAttribute="leading" secondItem="xeY-qi-ZHe" secondAttribute="trailing" constant="8" id="8W5-96-rjR"/>
+                    <constraint firstItem="rNy-qb-oKl" firstAttribute="leading" secondItem="xeY-qi-ZHe" secondAttribute="trailing" constant="8" id="ATw-JQ-484"/>
+                    <constraint firstAttribute="trailing" secondItem="QFM-x8-08f" secondAttribute="trailing" constant="10" id="Adh-fP-qxI"/>
+                    <constraint firstItem="tTX-b5-R0N" firstAttribute="leading" secondItem="YfK-i3-mef" secondAttribute="trailing" constant="2" id="Cm4-sv-74T"/>
+                    <constraint firstItem="YfK-i3-mef" firstAttribute="bottom" secondItem="xeY-qi-ZHe" secondAttribute="bottom" id="DBt-Jg-VjV"/>
+                    <constraint firstAttribute="trailing" secondItem="v5w-Bh-Co2" secondAttribute="trailing" constant="8" id="F2p-04-GSi"/>
+                    <constraint firstItem="rNy-qb-oKl" firstAttribute="centerY" secondItem="xeY-qi-ZHe" secondAttribute="centerY" id="Fqu-dn-fVQ"/>
+                    <constraint firstAttribute="trailing" secondItem="tTX-b5-R0N" secondAttribute="trailing" constant="8" id="Wem-bP-8kF"/>
+                    <constraint firstItem="tTX-b5-R0N" firstAttribute="centerY" secondItem="YfK-i3-mef" secondAttribute="centerY" id="YIx-dK-RtN"/>
+                    <constraint firstAttribute="trailing" secondItem="rNy-qb-oKl" secondAttribute="trailing" constant="8" id="aAD-Rh-3Bs"/>
+                    <constraint firstAttribute="bottom" secondItem="xeY-qi-ZHe" secondAttribute="bottom" constant="10" id="bCc-F0-olc"/>
+                    <constraint firstItem="v5w-Bh-Co2" firstAttribute="leading" secondItem="xeY-qi-ZHe" secondAttribute="trailing" constant="8" id="cT7-yn-E7N"/>
+                    <constraint firstItem="xeY-qi-ZHe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="hXt-yE-6k4"/>
+                    <constraint firstItem="QFM-x8-08f" firstAttribute="centerY" secondItem="rNy-qb-oKl" secondAttribute="centerY" id="m3Z-Uz-fPZ"/>
+                    <constraint firstItem="tTX-b5-R0N" firstAttribute="bottom" secondItem="xeY-qi-ZHe" secondAttribute="bottom" id="rFn-B2-PjU"/>
+                    <constraint firstItem="v5w-Bh-Co2" firstAttribute="top" secondItem="xeY-qi-ZHe" secondAttribute="top" id="vEY-RR-jD2"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="rFn-B2-PjU"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="coverImageView" destination="xeY-qi-ZHe" id="pBH-vW-XKo"/>
+                <outlet property="nameLabel" destination="v5w-Bh-Co2" id="6DX-Qu-4bR"/>
+                <outlet property="playCountLabel" destination="tTX-b5-R0N" id="IwD-9g-3nD"/>
+                <outlet property="programNameLabel" destination="rNy-qb-oKl" id="KbO-6j-Gsf"/>
+            </connections>
+            <point key="canvasLocation" x="320" y="196"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="album_play.png" width="46" height="46"/>
+        <image name="ic_item_playtimes_count.png" width="20" height="20"/>
+    </resources>
+</document>

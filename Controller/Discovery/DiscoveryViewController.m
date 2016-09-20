@@ -15,6 +15,8 @@
 
 #import "CategoryCollectionViewCell.h"
 
+#import "RadioListCollectionViewCell.h"
+
 
 @interface DiscoveryViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,RecommendCollectionViewCellDelegate>
 
@@ -71,6 +73,8 @@
         
         [_contentCollectionView registerNib:[UINib nibWithNibName:@"CategoryCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"CategoryCollectionViewCell"];
         
+        [_contentCollectionView registerNib:[UINib nibWithNibName:@"RadioListCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"RadioListCollectionViewCell"];
+        
         [[_contentCollectionView rac_valuesAndChangesForKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew observer:nil] subscribeNext:^(id x) {
 
             RACTupleUnpack(NSNumber *p, NSDictionary *dic) = x;
@@ -115,8 +119,6 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:logo];
     
-   // self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ic_navi_history"]style:UIBarButtonItemStylePlain target:nil action:nil];
-    
     self.navigationItem.titleView = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, 80, 25)];
     
 }
@@ -146,7 +148,7 @@
         
         return cell;
         
-    }else{
+    }else if(indexPath.row == 1){
      
         NSString *reusedIdentifer = @"CategoryCollectionViewCell";
         
@@ -154,8 +156,15 @@
         
         return cell;
         
+    }else {
+        
+        NSString *reusedIdentifier = @"RadioListCollectionViewCell";
+        
+        RadioListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reusedIdentifier forIndexPath:indexPath];
+        
+        return cell;
     }
-
+    
 }
 
 #pragma mark - RecommendCollectionViewCellDelegate

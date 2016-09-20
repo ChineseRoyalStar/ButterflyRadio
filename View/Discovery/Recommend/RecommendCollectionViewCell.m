@@ -386,6 +386,8 @@
         
         [cell.contentDataSource removeAllObjects];
         
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         [cell.contentDataSource addObjectsFromArray:arr];
         
         [cell.contentCollectionView reloadData];
@@ -400,7 +402,9 @@
         
         SpecialColumnModel *model = [((SpecialColumnBoardModel *)[self.dataSource objectAtIndex:indexPath.section]).list objectAtIndex:indexPath.row];
         
-        [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:model.coverPath] placeholderImage:[UIImage imageNamed:@"placeholder.jpg"]];
+        [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:model.coverPath] placeholderImage:[UIImage imageNamed:@"image_default_200"]];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         cell.titleLabel.text = model.title;
         

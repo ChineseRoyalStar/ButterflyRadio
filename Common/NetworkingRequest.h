@@ -36,4 +36,8 @@
 #pragma mark - 发现分类界面底部广告栏
 - (void)requestForAdFooterInCategoryWithCallback:(void(^)(NSArray *adsUrl, NSError *err))callBack;
 
+#pragma mark - 发现广播界面
+- (void)reuquestForChannelListWithCallback:(void(^)(NSArray *channelList, NSArray *topRadios, NSError *err))callBack;
+
+
 @end

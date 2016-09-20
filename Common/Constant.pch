@@ -18,6 +18,8 @@
 
 #define PURPLE_COLOR [UIColor colorWithRed:153/255.0 green:51/255.0 blue:250/255.0 alpha:1]
 
+#define LIGHT_GRAY [UIColor colorWithRed:192/255.0 green:192/255.0 blue:192/255.0 alpha:0.5]
+
 #import "UIView+FrameSet.h"
 
 #import <Masonry/Masonry.h>
