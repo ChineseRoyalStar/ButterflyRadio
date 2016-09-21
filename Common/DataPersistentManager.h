@@ -16,6 +16,8 @@
 
 + (instancetype)sharedManager;
 
+- (void)deleteAll;
+
 - (void)insertRecord:(TopRadiosModel *)model;
 
 - (NSMutableArray *)queryForAll;

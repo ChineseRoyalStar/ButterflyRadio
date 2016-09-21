@@ -18,6 +18,8 @@
 #import "CategoryModel.h"
 #import "RadioCategoryModel.h"
 #import "TopRadiosModel.h"
+#import "RankingListSectionModel.h"
+
 
 #import <AFNetworking/AFNetworking.h>
 
@@ -304,6 +306,41 @@
         
     }];
     
+}
+
+#pragma mark - 发现榜单
+- (void)requestForRankingListWithCallback:(void(^)(NSArray *rankingListModels, NSArray *focusImages, NSError *err))callBack{
+    
+    /*
+     http://mobile.ximalaya.com/mobile/discovery/v2/rankingList/group?channel=and-a1&device=android&includeActivity=true&includeSpecial=true&scale=2&version=4.3.98
+     */
+    
+    
+    static NSString *baseUrl = @"http://mobile.ximalaya.com/mobile/discovery/v2/rankingList/group";
+    
+    NSDictionary *paras = @{@"channel":@"and-a1",@"device":@"android",@"includeSpecial":@"true",@"includeActivity":@"true",@"scale":@"2",@"version":@"4.3.98"};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:baseUrl parameters:paras progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSError *err = nil;
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&err];
+        
+        NSArray *rankingListModels = [RankingListSectionModel mj_objectArrayWithKeyValuesArray:[dic valueForKey:@"datas"]];
+        
+        NSArray *focusImages = [FocusImageModel mj_objectArrayWithKeyValuesArray:[[dic valueForKey:@"focusImages"]valueForKey:@"list"]];
+
+        callBack(rankingListModels,focusImages,nil);
+    
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        callBack(nil,nil,error);
+        
+    }];
 }
 
 

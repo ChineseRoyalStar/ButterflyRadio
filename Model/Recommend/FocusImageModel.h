@@ -10,7 +10,7 @@
 
 @interface FocusImageModel : NSObject
 
-@property(nonatomic,strong) NSNumber *id;
+@property(nonatomic,strong) NSNumber *Id;
 
 @property(nonatomic,copy) NSString *shortTitle;
 
@@ -25,5 +25,9 @@
 @property(nonatomic,strong) NSNumber *albumId;
 
 @property(nonatomic,assign) BOOL isShare;
+
+//
+
+@property(nonatomic,copy) NSString *url;
 
 @end

@@ -1,18 +1,19 @@
 //
-//  FocusImageModel.m
+//  FirstResultsModel.m
 //  ButterflyRadio
 //
-//  Created by qianfeng on 16/9/14.
+//  Created by qianfeng on 16/9/21.
 //  Copyright © 2016年 com.ios.ijinan. All rights reserved.
 //
 
-#import "FocusImageModel.h"
+#import "FirstResultsModel.h"
 
-@implementation FocusImageModel
+@implementation FirstResultsModel
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
     
-    return @{@"id":@"Id"};
+    return @{@"Id":@"id"};
 }
+
 
 @end

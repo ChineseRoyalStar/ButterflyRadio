@@ -40,7 +40,7 @@
 
 @property(nonatomic,strong) UIView *tableHeaderView;
 
-@property(nonatomic,strong) NSMutableArray<TopRadiosModel *> *dataSource;
+@property(nonatomic,strong) NSMutableArray<NSArray *> *dataSource;
 
 @property(nonatomic,strong) UIView *btnView;
 
@@ -87,6 +87,8 @@
         
         _tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 220)];
         
+        _tableHeaderView.backgroundColor = [UIColor whiteColor];
+        
         self.tableView.tableHeaderView = _tableHeaderView;
         
         UIButton *preBtn = nil;
@@ -110,6 +112,18 @@
             button.titleEdgeInsets = UIEdgeInsetsMake(40, 0, -40, 0);
             
             preBtn = button;
+            
+            [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+               
+                [[DataPersistentManager sharedManager] deleteAll];
+                
+                [self.dataSource removeObjectAtIndex:1];
+                
+                [self.dataSource addObject:[[NSArray alloc]init]];
+                
+                [self.tableView reloadData];
+                
+            }];
             
         }
         
@@ -173,13 +187,7 @@
                 
                 self.tableHeaderView.height -= (CGFloat)2*BUTTON_HEIGHT;
                 
-                [self.tableView beginUpdates];
-                
                 self.tableView.tableHeaderView = self.tableHeaderView;
-                
-                [self.tableView endUpdates];
-                
-                
                 
             }];
             
@@ -236,7 +244,11 @@
             
             [self createButtonWithModels:channelList];
             
-            [self.dataSource addObjectsFromArray:topRadios];
+            [self.dataSource addObject:topRadios];
+            //数据库缓存上次收听频道和节目
+            NSArray *arr = [[DataPersistentManager sharedManager]queryForAll];
+            
+            [self.dataSource addObject:arr];
             
             [self.tableView reloadData];
             
@@ -247,18 +259,24 @@
 
 #pragma mark - UITableViewDelegate Methods
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     return self.dataSource.count;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return [self.dataSource objectAtIndex:section].count;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     
     static NSString *reusedIdentifier = @"RadioListTableViewCell";
     
     RadioListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reusedIdentifier forIndexPath:indexPath];
-
-    TopRadiosModel *model = [self.dataSource objectAtIndex:indexPath.row];
+    
+    TopRadiosModel *model = [[self.dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
     [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:model.coverSmall] placeholderImage:[UIImage imageNamed:@"image_default_200"]];
     
@@ -266,9 +284,19 @@
     
     cell.nameLabel.text = model.name;
     
-    cell.programNameLabel.text = [NSString stringWithFormat:@"正在直播:%@",model.programName];
     
-    cell.playCountLabel.text = [NSString stringWithFormat:@"%.1f万人",model.playCount.floatValue/10000];
+    
+    if(indexPath.section == 0) {
+        
+        cell.programNameLabel.text = [NSString stringWithFormat:@"正在直播:%@",model.programName];
+        
+        cell.playCountLabel.text = [NSString stringWithFormat:@"%.1f万人",model.playCount.floatValue/10000];
+    }else {
+        
+        cell.programNameLabel.text = [NSString stringWithFormat:@"上次收听的节目：%@",model.programName];
+        
+        cell.playCountLabel.text = [NSString stringWithFormat:@"上次收听的时间：%@",model.playedTime];
+    }
     
     return cell;
 }
@@ -282,11 +310,111 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:false];
     
-    [[DataPersistentManager sharedManager]insertRecord:[self.dataSource objectAtIndex:indexPath.row]];
+    if(indexPath.section == 0) {
+        
+        [[DataPersistentManager sharedManager]insertRecord:[[self.dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
+        
+        [self.dataSource removeObjectAtIndex:1];
+        
+        [self.dataSource addObject:[[DataPersistentManager sharedManager]queryForAll]];
+        
+        [self.tableView reloadData];
+        
+    }
     
-    NSArray *arr = [[DataPersistentManager sharedManager]queryForAll];
+}
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
+    
+    
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+    
+    headerView.backgroundColor = [UIColor whiteColor];
+    
+    UIImageView *findingImgView = [[UIImageView alloc]init];
+    
+    findingImgView.image = [UIImage imageNamed:@"ic_section_header"];
+    
+    [headerView addSubview:findingImgView];
+    
+    [findingImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(headerView).offset(15);
+        
+        make.centerY.equalTo(headerView);
+        
+        make.height.mas_equalTo(@20);
+        
+        make.width.mas_equalTo(@15);
+        
+    }];
+    
+    
+    UILabel *titleLabel = [[UILabel alloc]init];
+    
+    if(section == 0){
+        
+        titleLabel.text = @"排行榜";
+    }else{
+        
+        titleLabel.text = @"收听历史";
+    }
+    
+
+    titleLabel.font=  [UIFont systemFontOfSize:15];
+    
+    [headerView addSubview:titleLabel];
+    
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(findingImgView.mas_right).offset(5);
+        
+        make.centerY.equalTo(headerView);
+        
+        make.height.mas_equalTo(@20);
+        
+    }];
+    
+    
+    UIButton *btn = [[UIButton alloc]init];
+    
+    [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    
+    [btn setTitleColor:[UIColor orangeColor] forState:UIControlStateHighlighted];
+    
+    [btn setTitle:@"更多" forState:UIControlStateNormal];
+    
+    [btn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    
+    [btn setImage:[UIImage imageNamed:@"ic_more_normal"] forState:UIControlStateNormal];
+    
+    [btn setImage:[UIImage imageNamed:@"ic_more_pressed"] forState:UIControlStateHighlighted];
+    
+    [btn setImageEdgeInsets:UIEdgeInsetsMake(0, 30 , 0, -30)];
+    
+    [btn setTitleEdgeInsets:UIEdgeInsetsMake(0, -15, 0, 15)];
+    
+    [headerView addSubview:btn];
+    
+    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.right.equalTo(headerView).offset(10);
+        
+        make.centerY.equalTo(headerView);
+        
+        make.width.mas_equalTo(@80);
+        
+        make.height.mas_equalTo(@20);
+        
+    }];
+    
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    
+    return 50;
 }
 
 @end

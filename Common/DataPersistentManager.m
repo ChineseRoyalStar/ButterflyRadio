@@ -9,7 +9,6 @@
 #import "DataPersistentManager.h"
 
 
-
 @interface DataPersistentManager()
 
 @property(nonatomic,strong) FMDatabase *manager;
@@ -68,7 +67,13 @@
     
     NSDate *currentDate = [[NSDate alloc]init];
     
-    [self.manager executeUpdate:insertRecord values:@[model.name,model.programName,@"1111",model.coverSmall] error:&error];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    
+    formatter.dateFormat = @"yyyy-MM-dd hh:mm:ss";
+    
+    NSString *playTime = [formatter stringFromDate:currentDate];
+    
+    [self.manager executeUpdate:insertRecord values:@[model.name,model.programName,playTime,model.coverSmall] error:&error];
 }
 
 
@@ -98,6 +103,15 @@
     }
     
     return results;
+}
+
+- (void)deleteAll {
+    
+    NSString *delete = @"delete from radioList";
+    
+    NSError *error = nil;
+    
+    [self.manager executeUpdate:delete values:nil error:&error];
 }
 
 

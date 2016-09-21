@@ -39,5 +39,8 @@
 #pragma mark - 发现广播界面
 - (void)reuquestForChannelListWithCallback:(void(^)(NSArray *channelList, NSArray *topRadios, NSError *err))callBack;
 
+#pragma mark - 发现榜单
+- (void)requestForRankingListWithCallback:(void(^)(NSArray *rankingListModels, NSArray *focusImages, NSError *err))callBack;
+
 
 @end

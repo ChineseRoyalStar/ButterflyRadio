@@ -17,6 +17,8 @@
 
 #import "RadioListCollectionViewCell.h"
 
+#import "RankingListCollectionViewCell.h"
+
 
 @interface DiscoveryViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,RecommendCollectionViewCellDelegate>
 
@@ -74,6 +76,8 @@
         [_contentCollectionView registerNib:[UINib nibWithNibName:@"CategoryCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"CategoryCollectionViewCell"];
         
         [_contentCollectionView registerNib:[UINib nibWithNibName:@"RadioListCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"RadioListCollectionViewCell"];
+    
+        [_contentCollectionView registerNib:[UINib nibWithNibName:@"RankingListCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"RankingListCollectionViewCell"];
         
         [[_contentCollectionView rac_valuesAndChangesForKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew observer:nil] subscribeNext:^(id x) {
 
@@ -156,13 +160,22 @@
         
         return cell;
         
-    }else {
+    }else if(indexPath.row ==2){
         
         NSString *reusedIdentifier = @"RadioListCollectionViewCell";
         
         RadioListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reusedIdentifier forIndexPath:indexPath];
         
         return cell;
+        
+    }else{
+        
+        NSString *reusedIdentifier = @"RankingListCollectionViewCell";
+        
+        RankingListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reusedIdentifier forIndexPath:indexPath];
+        
+        return cell;
+        
     }
     
 }
