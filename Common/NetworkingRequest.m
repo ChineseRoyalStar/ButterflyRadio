@@ -19,6 +19,7 @@
 #import "RadioCategoryModel.h"
 #import "TopRadiosModel.h"
 #import "RankingListSectionModel.h"
+#import "AnchorSectionModel.h"
 
 
 #import <AFNetworking/AFNetworking.h>
@@ -341,6 +342,42 @@
         callBack(nil,nil,error);
         
     }];
+}
+
+#pragma mark - 发现主播
+
+- (void)requestForExploreUserWithCallback:(void(^)(NSArray *anchors, NSError *err))callback{
+    
+    /*
+     http://mobile.ximalaya.com/m/explore_user_index?device=android&page=1
+     */
+    
+    
+    static NSString *baseUrl = @"http://mobile.ximalaya.com/m/explore_user_index";
+    
+    NSDictionary *paras = @{@"device":@"android",@"page":@"1"};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:baseUrl parameters:paras progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSError *err = nil;
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&err];
+        
+        NSArray *anchors = [AnchorSectionModel mj_objectArrayWithKeyValuesArray:[dic valueForKey:@"list"]];
+        
+        callback(anchors,nil);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        callback(nil, error);
+    }];
+    
+    
+    
 }
 
 

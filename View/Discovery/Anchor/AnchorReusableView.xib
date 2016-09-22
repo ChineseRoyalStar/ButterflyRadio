@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="U6b-Vx-4bR" customClass="AnchorReusableView">
+            <rect key="frame" x="0.0" y="0.0" width="309" height="42"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_section_header.png" translatesAutoresizingMaskIntoConstraints="NO" id="vOs-6q-9ap">
+                    <rect key="frame" x="8" y="11" width="15" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="15" id="JdQ-Jf-WUU"/>
+                        <constraint firstAttribute="height" constant="20" id="QQ2-mU-p4R"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_more_normal.png" translatesAutoresizingMaskIntoConstraints="NO" id="x0l-oa-e9c">
+                    <rect key="frame" x="286" y="13" width="15" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="Pt3-H1-xnX"/>
+                        <constraint firstAttribute="width" constant="15" id="YC9-UV-jL6"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0r0-Av-77y">
+                    <rect key="frame" x="251" y="6" width="30" height="30"/>
+                    <state key="normal" title="更多">
+                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqo-AV-UBi">
+                    <rect key="frame" x="31" y="10" width="248" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="51f-rn-6Jq"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="pqo-AV-UBi" firstAttribute="leading" secondItem="vOs-6q-9ap" secondAttribute="trailing" constant="8" id="8E5-1A-GNo"/>
+                <constraint firstItem="0r0-Av-77y" firstAttribute="centerY" secondItem="pqo-AV-UBi" secondAttribute="centerY" id="AK2-IX-MyR"/>
+                <constraint firstItem="x0l-oa-e9c" firstAttribute="leading" secondItem="0r0-Av-77y" secondAttribute="trailing" constant="5" id="K0O-U6-uGQ"/>
+                <constraint firstItem="pqo-AV-UBi" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="SBu-yB-HoI"/>
+                <constraint firstItem="vOs-6q-9ap" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="VRb-Io-dj6"/>
+                <constraint firstItem="x0l-oa-e9c" firstAttribute="centerY" secondItem="pqo-AV-UBi" secondAttribute="centerY" id="cm0-cB-gm6"/>
+                <constraint firstAttribute="trailing" secondItem="0r0-Av-77y" secondAttribute="trailing" constant="4" id="eV8-dF-dqO"/>
+                <constraint firstAttribute="trailing" secondItem="pqo-AV-UBi" secondAttribute="trailing" constant="30" id="foJ-Ha-Zpa"/>
+                <constraint firstAttribute="trailing" secondItem="x0l-oa-e9c" secondAttribute="trailing" constant="8" id="h4p-eC-nZS"/>
+                <constraint firstItem="vOs-6q-9ap" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="8" id="jWX-F8-hVR"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="eV8-dF-dqO"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="titleLabel" destination="pqo-AV-UBi" id="H27-i0-zWE"/>
+            </connections>
+            <point key="canvasLocation" x="308.5" y="319"/>
+        </collectionReusableView>
+    </objects>
+    <resources>
+        <image name="ic_more_normal.png" width="16" height="26"/>
+        <image name="ic_section_header.png" width="16" height="26"/>
+    </resources>
+</document>

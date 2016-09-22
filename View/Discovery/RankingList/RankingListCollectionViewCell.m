@@ -135,6 +135,8 @@
     
     cell.secondResultLabel.text = [NSString stringWithFormat:@"2 %@",((FirstResultsModel *)[model.firstKResults objectAtIndex:1]).title];
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
@@ -191,6 +193,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
     return 50;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:false];
 }
 
 

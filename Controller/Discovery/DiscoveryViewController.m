@@ -19,6 +19,8 @@
 
 #import "RankingListCollectionViewCell.h"
 
+#import "AnchorCollectionViewCell.h"
+
 
 @interface DiscoveryViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,RecommendCollectionViewCellDelegate>
 
@@ -78,6 +80,8 @@
         [_contentCollectionView registerNib:[UINib nibWithNibName:@"RadioListCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"RadioListCollectionViewCell"];
     
         [_contentCollectionView registerNib:[UINib nibWithNibName:@"RankingListCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"RankingListCollectionViewCell"];
+        
+        [_contentCollectionView registerNib:[UINib nibWithNibName:@"AnchorCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"AnchorCollectionViewCell"];
         
         [[_contentCollectionView rac_valuesAndChangesForKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew observer:nil] subscribeNext:^(id x) {
 
@@ -168,11 +172,19 @@
         
         return cell;
         
-    }else{
+    }else if(indexPath.row == 3){
         
         NSString *reusedIdentifier = @"RankingListCollectionViewCell";
         
         RankingListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reusedIdentifier forIndexPath:indexPath];
+        
+        return cell;
+        
+    }else {
+        
+        NSString *reusedIdentifier = @"AnchorCollectionViewCell";
+        
+        AnchorCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reusedIdentifier forIndexPath:indexPath];
         
         return cell;
         

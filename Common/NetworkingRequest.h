@@ -42,5 +42,8 @@
 #pragma mark - 发现榜单
 - (void)requestForRankingListWithCallback:(void(^)(NSArray *rankingListModels, NSArray *focusImages, NSError *err))callBack;
 
+#pragma mark - 发现主播
+- (void)requestForExploreUserWithCallback:(void(^)(NSArray *anchors, NSError *err))callback;
+
 
 @end
