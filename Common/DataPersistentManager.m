@@ -51,7 +51,7 @@
         }
         
         
-        NSString *createDatabase = @"create table if not exists radioList(name varchar(256) primary key, programme varchar(256), playTime varchar(256),image varchar(256))";
+        NSString *createDatabase = @"create table if not exists radioList(id integer primary key autoincrement,name varchar(256), programme varchar(256), playTime varchar(256),image varchar(256))";
         
         [self.manager executeUpdate:createDatabase];
     }
@@ -81,7 +81,7 @@
     
     NSMutableArray *results = [[NSMutableArray alloc]init];
     
-    NSString *query = @"select * from radioList";
+    NSString *query = @"select * from radioList order by id desc";
     
     NSError *error = nil;
     
@@ -105,6 +105,26 @@
     return results;
 }
 
+
+- (BOOL)queryForExistenceWithChannelName:(NSString *)channelName{
+    
+    NSString *query = [NSString stringWithFormat:@"select * from radioList where name = '%@'",channelName];
+    
+    NSError *err = nil;
+    
+    FMResultSet *rs = [self.manager executeQuery:query values:nil error:&err];
+    
+    if([rs next]){
+        
+        return true;
+        
+    }else{
+        
+        return false;
+    }
+}
+
+
 - (void)deleteAll {
     
     NSString *delete = @"delete from radioList";
@@ -112,6 +132,17 @@
     NSError *error = nil;
     
     [self.manager executeUpdate:delete values:nil error:&error];
+}
+
+
+- (void)deleteRecordWithName:(NSString *)name {
+    
+    NSString *delete = [NSString stringWithFormat:@"delete from radioList where name='%@'",name];
+    
+    NSError *err = nil;
+    
+    [self.manager executeUpdate:delete values:nil error:&err];
+    
 }
 
 

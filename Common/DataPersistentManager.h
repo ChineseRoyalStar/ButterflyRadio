@@ -18,8 +18,13 @@
 
 - (void)deleteAll;
 
+- (void)deleteRecordWithName:(NSString *)name;
+
 - (void)insertRecord:(TopRadiosModel *)model;
 
 - (NSMutableArray *)queryForAll;
+
+- (BOOL)queryForExistenceWithChannelName:(NSString *)channelName;
+
 
 @end

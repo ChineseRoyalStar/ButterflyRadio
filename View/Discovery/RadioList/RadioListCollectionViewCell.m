@@ -310,7 +310,16 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:false];
     
+    TopRadiosModel *model = [[self.dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    
     if(indexPath.section == 0) {
+        
+        BOOL isExist = [[DataPersistentManager sharedManager]queryForExistenceWithChannelName:model.name];
+        
+        if(isExist) {
+            
+            [[DataPersistentManager sharedManager]deleteRecordWithName:model.name];
+        }
         
         [[DataPersistentManager sharedManager]insertRecord:[[self.dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
         
@@ -325,8 +334,6 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    
     
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
     
